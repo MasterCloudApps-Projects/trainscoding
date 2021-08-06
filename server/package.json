@@ -1,0 +1,31 @@
+{
+  "name": "trainscoding-server",
+  "version": "0.0.1",
+  "description": "Web server running on NodeJS runtime, using Express framework.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasterCloudApps-Projects/trainscoding.git"
+  },
+  "keywords": [
+    "web",
+    "server",
+    "nodejs",
+    "express",
+    "app"
+  ],
+  "author": "Javier Garcia Gonzalez <javier@garciagon.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/MasterCloudApps-Projects/trainscoding/issues"
+  },
+  "homepage": "https://github.com/MasterCloudApps-Projects/trainscoding#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}
