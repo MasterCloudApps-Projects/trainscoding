@@ -1,4 +1,4 @@
-const { serverPort } = require('../config');
+const { serverPort } = require('../../config');
 
 const initAppContainer = require('../router/app');
 
