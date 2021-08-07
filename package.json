@@ -18,7 +18,7 @@
     "cloud"
   ],
   "workspaces": [
-      "server"
+      "./packages/*"
   ],
   "author": "Javier Garcia Gonzalez <javier@garciagon.com>",
   "license": "Apache-2.0",
