@@ -1,0 +1,29 @@
+{
+  "name": "trainscoding",
+  "version": "0.0.1",
+  "description": "Cloud based platform for video management.",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasterCloudApps-Projects/trainscoding.git"
+  },
+  "keywords": [
+    "Nodejs",
+    "Monorepo",
+    "Video",
+    "Web",
+    "Traiscoding",
+    "cloud"
+  ],
+  "workspaces": [
+      "server"
+  ],
+  "author": "Javier Garcia Gonzalez <javier@garciagon.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/MasterCloudApps-Projects/trainscoding/issues"
+  },
+  "homepage": "https://github.com/MasterCloudApps-Projects/trainscoding#readme"
+}
