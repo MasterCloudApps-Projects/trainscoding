@@ -1,5 +1,5 @@
-const express = require('express');
-const helloWorldRouter = require('./routes/helloWorld');
+import express from 'express';
+import helloWorldRouter from './routes/helloWorld';
 
 function init(services) {
     const app = express();
@@ -12,4 +12,5 @@ function init(services) {
     return app;
 };
 
-module.exports = init;
+
+export default init;

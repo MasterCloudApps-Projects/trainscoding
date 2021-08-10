@@ -4,4 +4,4 @@ function init({ helloWorldRepository }) {
     };
 };
 
-module.exports = { init };
+export default { init };

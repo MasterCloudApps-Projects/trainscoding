@@ -9,8 +9,7 @@ COPY package-lock.json /usr/server
 
 RUN npm install --only=production
 
-COPY src /usr/server/src
-COPY config /usr/server/config
+COPY lib /usr/server/lib
 
 EXPOSE ${SERVER_PORT}
 

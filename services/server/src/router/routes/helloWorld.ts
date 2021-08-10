@@ -1,4 +1,5 @@
-const express = require('express');
+import express from 'express';
+
 const router = express.Router();
 
 function init({ helloWorldService }) {
@@ -10,4 +11,4 @@ function init({ helloWorldService }) {
     return router;
 };
 
-module.exports = { init };
+export default { init };

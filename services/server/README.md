@@ -7,7 +7,7 @@ This is the entry point for Trainscoding's services. It is a NodeJS Express web 
 Run:
 
 ``` sh
-$ docker run --rm -e "SERVER_PORT=8080" -p 8080:8080 javiergarciagonzalez/trainscoding-server
+$ docker run --rm -e "SERVER_PORT=8080" -p 8080:8080 javiergarciagon/trainscoding-server
 ```
 
 It will download a Docker image that contains the code for Trainscoding Server.

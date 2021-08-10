@@ -1,29 +1,46 @@
 {
-  "name": "trainscoding",
-  "version": "0.0.1",
-  "description": "Cloud based platform for video management.",
-  "scripts": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MasterCloudApps-Projects/trainscoding.git"
-  },
-  "keywords": [
-    "Nodejs",
-    "Monorepo",
-    "Video",
-    "Web",
-    "Traiscoding",
-    "cloud"
-  ],
-  "workspaces": [
-      "./packages/*"
-  ],
-  "author": "Javier Garcia Gonzalez <javier@garciagon.com>",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/MasterCloudApps-Projects/trainscoding/issues"
-  },
-  "homepage": "https://github.com/MasterCloudApps-Projects/trainscoding#readme"
+    "name": "trainscoding",
+    "version": "0.0.1",
+    "description": "Cloud based platform for video management.",
+    "scripts": {
+        "bootstrap": "lerna bootstrap --hoist",
+        "build": "run-p clean && run-s build:*",
+        "build:server": "tsc -b ./services/server/tsconfig.json",
+        "clean": "lerna run --parallel clean",
+        "publish": "lerna publish",
+        "postinstall": "npm run bootstrap",
+        "start": "run-p build && docker-compose up"
+    },
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MasterCloudApps-Projects/trainscoding.git"
+    },
+    "keywords": [
+        "Nodejs",
+        "Monorepo",
+        "Video",
+        "Web",
+        "Traiscoding",
+        "cloud"
+    ],
+    "workspaces": {
+        "services": [
+            "services/server/*"
+        ]
+    },
+    "author": "Javier Garcia Gonzalez <javier@garciagon.com>",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/MasterCloudApps-Projects/trainscoding/issues"
+    },
+    "homepage": "https://github.com/MasterCloudApps-Projects/trainscoding#readme",
+    "devDependencies": {
+        "@types/express": "^4.17.13",
+        "@types/node": "^16.4.13",
+        "lerna": "^4.0.0",
+        "npm-run-all": "^4.1.5",
+        "ts-node": "^10.1.0",
+        "typescript": "^4.3.5"
+    }
 }

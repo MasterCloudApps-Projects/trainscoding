@@ -2,11 +2,11 @@ version: "3.9"
 
 services:
   server:
-    image: javiergarciagonzalez/trainscoding-server:0.0.2
+    image: javiergarciagon/trainscoding-server:0.0.3
     environment:
       SERVER_PORT: ${SERVER_PORT}
     env_file:
-    - ./server/.env.server
+    - ./services/server/.env.server
     ports:
     - "${SERVER_PORT}:${SERVER_PORT}"
     command: ["npm", "start"]

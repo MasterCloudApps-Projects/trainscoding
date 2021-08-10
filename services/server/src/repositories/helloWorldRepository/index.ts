@@ -14,4 +14,4 @@ function init(/* It should receive a model object if exists */) {
 };
 
 
-module.exports = { init };
+export default { init };
