@@ -2,6 +2,7 @@
 node_modules/
 .npm/
 dist
+lib
 
 # Logs
 logs
@@ -18,3 +19,6 @@ lerna-debug.log*
 
 # Misc.
 .vscode
+
+# OS-specific files
+.DS_Store
