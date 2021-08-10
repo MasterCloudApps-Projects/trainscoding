@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e
+
+if [ ! -f .env ]; then
+    find . -type f -name 'example.env*' | while read FILE ; do
+        echo ${FILE}
+        newfile="$(echo ${FILE} |sed -e 's/\example././')" ;
+        cp "${FILE}" "${newfile}";
+    done
+fi
+
+echo "Created .env"
