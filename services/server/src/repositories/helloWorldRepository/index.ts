@@ -1,19 +1,20 @@
-import { Repository } from "types/repositories";
+import { Repository } from "src/types/repositories";
 
 function getGreetings(): string {
-     return 'Hello world!'
-};
+  return "Hello world!";
+}
 
 const helloWorldStore = {
-    getGreetings
+  getGreetings
 };
 
-function init(/* It should receive a model object if exists */): Repository<string | void> {
-    return {
-        ...helloWorldStore,
-        getSchemas: () => {}
-    };
-};
-
+function init(/* It should receive a model object if exists */): Repository<
+  string | void
+> {
+  return {
+    ...helloWorldStore,
+    getSchemas: () => {}
+  };
+}
 
 export default { init };

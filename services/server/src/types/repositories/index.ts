@@ -1,3 +1,3 @@
 export type Repository<T> = {
-    [functName: string]: () => T
+  [functName: string]: () => T;
 };

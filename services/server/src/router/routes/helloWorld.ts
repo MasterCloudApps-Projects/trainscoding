@@ -1,14 +1,18 @@
-import express from 'express';
+import express from "express";
+import { Service } from "../../types/services";
 
 const router = express.Router();
 
-function init({ helloWorldService }) {
-    router.get('/', async (req, res) => {
+interface Args {
+  helloWorldService: Service<string>;
+}
 
-        return res.send('Hello world!');
-    });
+function init({ helloWorldService }: Args) {
+  router.get("/", async (req, res) => {
+    return res.send(helloWorldService.getGreetings());
+  });
 
-    return router;
-};
+  return router;
+}
 
 export default { init };
