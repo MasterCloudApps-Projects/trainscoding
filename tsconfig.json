@@ -10,6 +10,6 @@
         "downlevelIteration": true,
     },
     "include": [
-        "./packages/**/*"
+        "./services/**/*"
     ]
 }

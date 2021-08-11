@@ -13,6 +13,6 @@
     "baseUrl": "./",
     "composite": true
   },
-  "include": ["src/**/*", "config/**/*"],
+  "include": ["./**/*.ts"],
   "exclude": ["node_modules", "lib"],
 }
