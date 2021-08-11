@@ -20,6 +20,9 @@
     "express",
     "app"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Javier Garcia Gonzalez <javier@garciagon.com>",
   "license": "Apache-2.0",
   "bugs": {
