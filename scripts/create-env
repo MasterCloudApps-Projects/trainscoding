@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-if [ ! -f .env ]; then
-    find . -type f -name 'example.env*' | while read FILE ; do
-        echo ${FILE}
-        newfile="$(echo ${FILE} |sed -e 's/\example././')" ;
-        cp "${FILE}" "${newfile}";
-    done
-fi
+# Creates a new .env* file per every `example.env*` file that exists in this repository.
+# It will only create those that doesn't exist yet, and it won't override the existing ones.
+find . -name 'example.env*' -type f -exec sh -c '
+for f; do
 
-echo "Created .env"
+    newFileName=${f%/*}/${f##*/example}
+
+    if [ ! -f ${newFileName}
+    then
+        cp -n "$f" "${newFileName}"
+    fi
+done' sh {} +
