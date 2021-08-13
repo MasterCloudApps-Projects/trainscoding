@@ -11,5 +11,12 @@ for f; do
     if [ ! -f ${newFileName} ]
     then
         cp -n "$f" "${newFileName}"
+        if [ $? -ne 0 ]
+        then
+            echo "File: $(newFileName) could not been created."
+        else
+            echo "File: \"$newFileName\" have been created."
+            echo "Do not forget to add values to the new .env file(s)! 🚀"
+        fi
     fi
 done' sh {} +
