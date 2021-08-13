@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
-# Creates a new .env* file per every `example.env*` file that exists in this repository.
+# Creates a new .env* file per every `example.env*` that exists in this repository.
 # It will only create those that doesn't exist yet, and it won't override the existing ones.
 find . -name 'example.env*' -type f -exec sh -c '
 for f; do
 
     newFileName=${f%/*}/${f##*/example}
 
-    if [ ! -f ${newFileName}
+    if [ ! -f ${newFileName} ]
     then
         cp -n "$f" "${newFileName}"
     fi
