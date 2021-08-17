@@ -6,7 +6,7 @@ metadata:
     dev.okteto.com/generate-host: "true"
     dev.okteto.com/auto-ingress: "true"
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
