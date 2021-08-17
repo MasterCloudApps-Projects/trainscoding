@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: trainscoding-ingress
   annotations:
+    dev.okteto.com/generate-host: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
