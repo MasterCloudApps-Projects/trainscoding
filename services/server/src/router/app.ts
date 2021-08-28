@@ -7,7 +7,7 @@ function init(services) {
 
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
-    app.use(morgan('combined'));
+    app.use(morgan(':id :method :url :response-time'));
 
     app.use('/api/hi', helloWorldRouter.init(services));
 

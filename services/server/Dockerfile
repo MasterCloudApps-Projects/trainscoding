@@ -7,7 +7,7 @@ WORKDIR /usr/server
 COPY package.json /usr/server
 COPY package-lock.json /usr/server
 
-RUN npm install --only=production
+RUN npm install
 
 COPY lib /usr/server/lib
 
