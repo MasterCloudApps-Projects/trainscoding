@@ -1,0 +1,56 @@
+name: Server workflow
+
+on:
+  push:
+    branches-ignore:
+    - main
+    paths:
+      - 'services/server/**'
+  workflow_dispatch:
+
+jobs:
+
+  publish:
+    name: Pubish last release candidate if tests pass
+    runs-on: ubuntu-20.04
+    env:
+      IMAGE_NAME: trainscoding-server
+      DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      GITHUB_REPOSITORY: $(echo ${{ github.repository }} | awk '{print tolower($0)}')
+
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+
+    - name: Set up NodeJS 16
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Download latest release candidate Docker image
+      run: docker pull $DOCKERHUB_USER/$IMAGE_NAME:rc
+
+    - name: Run tests againts recently downloaded docker image
+      run: |
+        docker run -d -p 8080:8080 $DOCKERHUB_USER/$IMAGE_NAME:rc
+        npm run test
+
+    - name: Login to GitHub Docker Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+    - name: Re-tag definitive production version and publish to Docker Github registry
+      run: |
+        IMAGE_VERSION=$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout | sed 's/\.[^.]*$//')
+        GITHUB_REPOSITORY=$(echo ${{ github.repository }} | awk '{print tolower($0)}')
+        docker tag $DOCKERHUB_USER/$IMAGE_NAME:rc docker.pkg.github.com/$GITHUB_REPOSITORY/$IMAGE_NAME:$IMAGE_VERSION
+        docker image push --all-tags docker.pkg.github.com/$GITHUB_REPOSITORY/$IMAGE_NAME
+
+    - name: Login to DockerHub
+      run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
+
+    - name: Re-tag definitive production version and publish to DockerHub registry
+      run: |
+        IMAGE_VERSION=$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout | sed 's/\.[^.]*$//')
+        docker tag $DOCKERHUB_USER/$IMAGE_NAME:rc $DOCKERHUB_USER/$IMAGE_NAME:$IMAGE_VERSION
+        docker image push --all-tags $DOCKERHUB_USER/$IMAGE_NAME
