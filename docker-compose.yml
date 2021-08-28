@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   server:
-    image: javiergarciagon/trainscoding-server:0.0.3
+    image: javiergarciagon/trainscoding-server:0.0.4
     environment:
       SERVER_PORT: ${SERVER_PORT}
     env_file:
