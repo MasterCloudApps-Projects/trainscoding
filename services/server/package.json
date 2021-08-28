@@ -10,8 +10,7 @@
         "prettier:fix": "prettier --write src/**/*.ts",
         "lint": "eslint . --ext .ts --format table --ignore-pattern '/lib/'",
         "lint:fix": "eslint . --ext .ts --fix --format table --ignore-pattern '/lib/'",
-        "build": "tsc",
-        "test": "jest"
+        "build": "tsc"
     },
     "repository": {
         "type": "git",

@@ -8,8 +8,8 @@
         "inlineSources": true,
         "sourceRoot": "/",
         "downlevelIteration": true,
+        "rootDir": "./"
     },
-    "include": [
-        "./services/**/*"
-    ]
+    "include": ["./services/**/*", "./packages/**/*"],
+    "exclude": ["node_modules"]
 }

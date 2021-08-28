@@ -4,5 +4,9 @@
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "sourceType": "module"
+    },
+    "env": {
+        "jest": true,
+        "node": true
     }
 }
