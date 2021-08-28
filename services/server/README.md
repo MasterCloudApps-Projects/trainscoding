@@ -6,7 +6,7 @@ This is the entry point for Trainscoding's services. It is a NodeJS Express web 
 
 Run:
 
-``` sh
+```sh
 $ docker run --rm -e "SERVER_PORT=8080" -p 8080:8080 javiergarciagon/trainscoding-server
 ```
 
@@ -16,8 +16,7 @@ Go to: `localhost:8080/api/hi` to get a hello world message.
 
 ## Development
 
-``` sh
+```sh
 npm i
 npm run dev
 ```
-
