@@ -1,15 +1,17 @@
-import express from "express";
-import helloWorldRouter from "./routes/helloWorld";
+import express from 'express';
+import morgan from 'morgan';
+import helloWorldRouter from './routes/helloWorld';
 
 function init(services) {
-  const app = express();
+    const app = express();
 
-  app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
+    app.use(morgan('combined'));
 
-  app.use("/api/hi", helloWorldRouter.init(services));
+    app.use('/api/hi', helloWorldRouter.init(services));
 
-  return app;
+    return app;
 }
 
 export default init;
