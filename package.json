@@ -14,7 +14,9 @@
         "publish": "lerna publish",
         "postinstall": "npm run bootstrap",
         "start": "run-p build && docker-compose up",
-        "test": "jest"
+        "test": "jest",
+        "test:watch": "jest --watchAll",
+        "test:coverage": "jest --coverage"
     },
     "repository": {
         "type": "git",
