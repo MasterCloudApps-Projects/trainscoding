@@ -4,6 +4,8 @@ on:
   push:
     branches-ignore:
     - main
+    paths:
+      - 'services/server/**'
   workflow_dispatch:
 
 jobs:
@@ -12,6 +14,7 @@ jobs:
     name: Pubish last release candidate if tests pass
     runs-on: ubuntu-20.04
     env:
+      SCOPE: serivces/server
       IMAGE_NAME: trainscoding-server
       DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -26,8 +29,8 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Make build
-      run: make build
+    - name: Test all packages and services
+      run: SCOPE=$SCOPE make test
 
     - name: Download latest release candidate Docker image
       run: docker pull $DOCKERHUB_USER/$IMAGE_NAME:rc

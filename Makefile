@@ -10,4 +10,9 @@ build:
 # Spin up development environment
 .PHONY: up
 up:
-	$(DOCKER_COMPOSE) up --abort-on-container-exit
+	$(MAIN_DOCKER_COMPOSE) up --abort-on-container-exit
+
+
+.PHONY: test
+test:
+	$(TEST_DOCKER_COMPOSE) up --abort-on-container-exit

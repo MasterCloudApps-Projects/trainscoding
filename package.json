@@ -37,8 +37,11 @@
         "cloud"
     ],
     "workspaces": {
+        "packages": [
+            "packages/*"
+        ],
         "services": [
-            "services/server/*"
+            "services/*"
         ]
     },
     "author": "Javier Garcia Gonzalez <javier@garciagon.com>",

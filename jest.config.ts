@@ -13,5 +13,9 @@ export default {
     transform: {
         '^.+\\.js$': 'babel-jest',
         '^.+\\.ts$': 'ts-jest'
-    }
+    },
+    projects: [
+        { displayName: 'Service tests', testMatch: ['<rootDir>/services/*/__tests__/*.test.ts'] },
+        { displayName: 'Package tests', testMatch: ['<rootDir>/packages/*/__tests__/*.test.ts'] }
+    ]
 };
