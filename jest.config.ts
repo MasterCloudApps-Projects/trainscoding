@@ -1,6 +1,6 @@
 export default {
     coverageDirectory: 'coverage',
-    testMatch: ['**/__tests__/**/*.+(ts|tsx|js)', '**/?(*.)+(spec|test).+(ts|tsx|js)'],
+    testMatch: ['<rootDir>/services/*/__tests__/*.test.ts', '<rootDir>/packages/*/__tests__/*.test.ts'],
     preset: 'ts-jest/presets/js-with-babel',
     testPathIgnorePatterns: ['/node_modules/', 'lib'],
     roots: ['<rootDir>/packages', '<rootDir>/services'],
