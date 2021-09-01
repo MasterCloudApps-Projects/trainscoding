@@ -5,4 +5,4 @@ services:
     image: javiergarciagon/trainscoding-unit-tests:lts
     environment:
       SCOPE: ${SCOPE}
-    command: [ "npm", "t", "--", "--projects", "${SCOPE}" ]
+    command: ["npm", "t", "--", "--projects", "${SCOPE}"]
