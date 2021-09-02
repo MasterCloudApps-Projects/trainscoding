@@ -4,8 +4,11 @@
     "description": "Cloud based platform for video management.",
     "scripts": {
         "bootstrap": "lerna bootstrap --hoist",
-        "build": "run-p clean && run-s build:lerna",
+        "build": "run-p build:all",
+        "build:all": "run-p clean && run-s build:lerna",
+        "build:service": "run-p clean && run-s build:lerna:scope",
         "build:lerna": "lerna run build",
+        "build:lerna:scope": "lerna run --scope $npm_config_service build",
         "prettier": "lerna run prettier",
         "prettier:fix": "lerna run prettier:fix",
         "lint": "lerna run lint",
