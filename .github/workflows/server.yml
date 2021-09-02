@@ -16,7 +16,7 @@ jobs:
     name: Pubish last release candidate if tests pass
     runs-on: ubuntu-20.04
     env:
-      SCOPE: serivces/server
+      SCOPE: services/server
       IMAGE_NAME: trainscoding-server
       DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
