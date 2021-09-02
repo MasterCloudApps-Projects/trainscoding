@@ -4,8 +4,10 @@ include Makefile.vars
 create-env:
 	@./scripts/create-env
 
+BUILD_SCOPE?=all
+
 build:
-	npm run build
+	npm run build:$(BUILD_SCOPE) --service=@trainscoding/$(SERVICE_NAME)
 
 # Spin up development environment
 .PHONY: up
