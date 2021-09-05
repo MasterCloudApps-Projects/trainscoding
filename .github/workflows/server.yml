@@ -2,13 +2,13 @@ name: Server workflow
 
 on:
   push:
-    branches-ignore:
-    - main
+    branches: [ main ]
     paths:
       - 'services/server/**'
       - 'docker/**'
       - 'k8s/**'
       - '.github/workflows/server.yml'
+      - 'Makefile*/'
   workflow_dispatch:
 
 env:
