@@ -1,8 +1,9 @@
 version: "3.9"
 
 services:
-  tests:
-    image: javiergarciagon/trainscoding-unit-tests:lts
+
+  unit-tests:
+    image: javiergarciagon/trainscoding-unit-tests:latest
     environment:
       SCOPE: ${SCOPE}
     command: ["npm", "t", "--", "--projects", "${SCOPE}"]
