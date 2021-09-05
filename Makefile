@@ -7,6 +7,7 @@ create-env:
 BUILD_SCOPE?=all
 
 build:
+	npm ci
 	npm run build:$(BUILD_SCOPE) --service=@trainscoding/$(SERVICE_NAME)
 
 # Spin up development environment

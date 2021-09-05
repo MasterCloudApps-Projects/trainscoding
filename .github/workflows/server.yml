@@ -11,17 +11,18 @@ on:
       - '.github/workflows/server.yml'
   workflow_dispatch:
 
+env:
+  SCOPE: services/server
+  DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  UNIT_TEST_IMAGE: trainscoding-unit-tests
+  SERVER_IMAGE: trainscoding-server
+
 jobs:
 
-  publish:
-    name: Pubish last release candidate if tests pass
+  generate-docker-unit-test-image-and-run-tests:
+    name: Build docker image
     runs-on: ubuntu-20.04
-    env:
-      SCOPE: services/server
-      IMAGE_NAME: trainscoding-server
-      DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      GITHUB_REPOSITORY: $(echo ${{ github.repository }} | awk '{print tolower($0)}')
 
     steps:
     - name: Clone repository
@@ -32,27 +33,60 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Download latest release candidate Docker image
-      run: docker pull $DOCKERHUB_USER/$IMAGE_NAME:rc
+    - name: Login to DockerHub
+      run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
 
-    - name: Test all packages and services
-      run: SCOPE=$SCOPE make test
-
-    - name: Login to GitHub Docker Registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
-    - name: Re-tag definitive production version and publish to Docker Github registry
+    - name: Build unit test image
       run: |
-        IMAGE_VERSION=${{ github.sha }}-$(date +%s)
-        GITHUB_REPOSITORY=$(echo ${{ github.repository }} | awk '{print tolower($0)}')
-        docker tag $DOCKERHUB_USER/$IMAGE_NAME:rc docker.pkg.github.com/$GITHUB_REPOSITORY/$IMAGE_NAME:$IMAGE_VERSION
-        docker image push --all-tags docker.pkg.github.com/$GITHUB_REPOSITORY/$IMAGE_NAME
+        docker build -t $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest -f docker/test/Dockerfile-unit-tests .
+        docker tag $DOCKERHUB_USER/$UNIT_TEST_IMAGE $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest
+        docker image push --all-tags $DOCKERHUB_USER/$UNIT_TEST_IMAGE
+
+    - name: Test server service
+      run: SCOPE=services/server make test
+
+  build-and-push-service-image:
+    name: Build and push service's image
+    runs-on: ubuntu-20.04
+    needs: [generate-docker-unit-test-image-and-run-tests]
+
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+
+    - name: Set up NodeJS 16
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Build Service Server artifact
+      run: BUILD_SCOPE=service SERVICE_NAME=server make build
+
+    - name: Build docker image for SERVER
+      run: |
+        TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
+        IMAGE_VERSION=${{ github.sha }}.$TIMESTAMP
+        docker build -t $SERVER_IMAGE -f services/server/Dockerfile ./services/server
 
     - name: Login to DockerHub
       run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
 
-    - name: Re-tag definitive production version and publish to DockerHub registry
+    - name: Push newest Server image to DockerHub
       run: |
-        IMAGE_VERSION=${{ github.sha }}-$(date +%s)
-        docker tag $DOCKERHUB_USER/$IMAGE_NAME:rc $DOCKERHUB_USER/$IMAGE_NAME:$IMAGE_VERSION
-        docker image push --all-tags $DOCKERHUB_USER/$IMAGE_NAME
+        TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
+        IMAGE_VERSION=${{ github.sha }}.$TIMESTAMP
+        docker tag $SERVER_IMAGE $DOCKERHUB_USER/$SERVER_IMAGE:rc
+        docker tag $SERVER_IMAGE $DOCKERHUB_USER/$SERVER_IMAGE:$IMAGE_VERSION
+        docker image push --all-tags $DOCKERHUB_USER/$SERVER_IMAGE
+
+    - name: Login to GitHub Docker Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Push image to GitHub Docker Registry
+      run: |
+        GITHUB_REPOSITORY=$(echo ${{ github.repository }} | awk '{print tolower($0)}')
+        TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
+        IMAGE_VERSION=${{ github.sha }}.$TIMESTAMP
+        docker tag $SERVER_IMAGE ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE:rc
+        docker tag $SERVER_IMAGE ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE:$IMAGE_VERSION
+        docker image push --all-tags ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE
