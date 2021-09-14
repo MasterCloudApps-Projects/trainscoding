@@ -10,6 +10,7 @@ for f; do
 
     if [ ! -f ${newFileName} ]
     then
+        echo "Generating environment files"
         cp -n "$f" "${newFileName}"
         if [ $? -ne 0 ]
         then

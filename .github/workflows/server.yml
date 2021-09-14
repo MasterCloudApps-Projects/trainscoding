@@ -20,7 +20,7 @@ env:
 
 jobs:
 
-  generate-docker-unit-test-image-and-run-tests:
+  run-tests-and-generate-docker-unit-test-image:
     name: Build docker image
     runs-on: ubuntu-20.04
 
@@ -36,19 +36,19 @@ jobs:
     - name: Login to DockerHub
       run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
 
+    - name: Test server service
+      run: SCOPE=services/server make test
+
     - name: Build unit test image
       run: |
         docker build -t $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest -f docker/test/Dockerfile-unit-tests .
         docker tag $DOCKERHUB_USER/$UNIT_TEST_IMAGE $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest
         docker image push --all-tags $DOCKERHUB_USER/$UNIT_TEST_IMAGE
 
-    - name: Test server service
-      run: SCOPE=services/server make test
-
   build-and-push-service-image:
     name: Build and push service's image
     runs-on: ubuntu-20.04
-    needs: [generate-docker-unit-test-image-and-run-tests]
+    needs: [run-tests-and-generate-docker-unit-test-image]
 
     steps:
     - name: Clone repository
