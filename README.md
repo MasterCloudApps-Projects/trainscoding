@@ -1,6 +1,8 @@
 # Trainscoding
 
-![Trainscoding cover image](https://github.com/MasterCloudApps-Projects/trainscoding/blob/main/docs/images/trainscoding.jpg)
+<p align="center">
+  <img src="https://github.com/MasterCloudApps-Projects/trainscoding/blob/main/docs/images/trainscoding.jpg?raw=true" alt="Trainscoding cover image"/>
+</p>
 
 ## Usage
 
