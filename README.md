@@ -1,5 +1,7 @@
 # Trainscoding
 
+![Trainscoding cover image](https://github.com/MasterCloudApps-Projects/trainscoding/blob/main/docs/images/trainscoding.jpg)
+
 ## Usage
 
 ### Prerequisites
