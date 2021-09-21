@@ -90,3 +90,20 @@ jobs:
         docker tag $SERVER_IMAGE ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE:rc
         docker tag $SERVER_IMAGE ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE:$IMAGE_VERSION
         docker image push --all-tags ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE
+
+    - name: Login to Okteto
+      uses: okteto/login@latest
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+
+    - name: "Activate Okteto Namespace"
+      uses: okteto/namespace@latest
+      with:
+        name: trainscoding
+
+    - name: "Deploy server to Okteto"
+      uses: okteto/pipeline@latest
+      with:
+        name: pr-${{ github.event.number }}
+        timeout: 8m
+        skipIfExists: true
