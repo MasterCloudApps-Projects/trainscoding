@@ -9,7 +9,7 @@
 ### Prerequisites
 
 - Docker and Docker-Compose
-- Environment variables (check [file template](https://github.com/MasterCloudApps-Projects/trainscoding/blob/main/example.env))
+- Environment variables (check [file template](https://github.com/MasterCloudApps-Projects/trainscoding/blob/main/docker/environment/development/example.env))
 
 ### Run
 
