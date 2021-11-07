@@ -25,3 +25,11 @@ ifdef scope
 else
 	$(TEST_DOCKER_COMPOSE) up --abort-on-container-exit
 endif
+
+.PHONY: lint
+lint:
+	npm run lint
+
+.PHONY: lint-fix
+lint-fix:
+	npm run lint:fix

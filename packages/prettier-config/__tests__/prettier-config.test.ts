@@ -1,5 +1,3 @@
-'use strict';
-
 import PrettierConfig from '../lib/prettier-config';
 
 describe('@trainscoding/prettier-config', () => {
