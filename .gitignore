@@ -3,6 +3,8 @@ node_modules/
 .npm/
 dist
 lib
+# Only allow lib folders from packages directoyry
+!packages/*/lib
 
 # Logs
 logs
@@ -22,7 +24,6 @@ lerna-debug.log*
 
 # OS-specific files
 .DS_Store
-
 
 # tests
 coverage
