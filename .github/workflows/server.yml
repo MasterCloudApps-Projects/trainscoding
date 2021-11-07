@@ -8,7 +8,7 @@ on:
       - 'docker/**'
       - 'k8s/**'
       - '.github/workflows/server.yml'
-      - 'Makefile*/'
+      - 'Makefile*'
   workflow_dispatch:
 
 env:
