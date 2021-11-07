@@ -6,10 +6,8 @@
     "scripts": {
         "start": "node lib/src/index.js",
         "dev": "nodemon",
-        "prettier": "prettier --check src/**/*.ts",
-        "prettier:fix": "prettier --write src/**/*.ts",
         "lint": "eslint . --ext .ts --format table --ignore-pattern '/lib/'",
-        "lint:fix": "eslint . --ext .ts --fix --format table --ignore-pattern '/lib/'",
+        "lint:fix": "prettier --config ../../.prettierrc.js --write ./src --write ./config --write ./__tests__",
         "build": "tsc"
     },
     "repository": {
