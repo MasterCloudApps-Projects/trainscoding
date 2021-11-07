@@ -1,6 +1,6 @@
 {
     "name": "@trainscoding/prettier-config",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Shareable configuration for prettier that is used by all packages in trainscoding repository",
     "keywords": [
         "Prettier",
@@ -29,6 +29,5 @@
     "bugs": {
         "url": "https://github.com/MasterCloudApps-Projects/trainscoding/issues"
     },
-    "gitHead": "d4846a26b82db8d926b6b5e65647e4e7c156069a",
-    "dependencies": {}
+    "gitHead": "d4846a26b82db8d926b6b5e65647e4e7c156069a"
 }
