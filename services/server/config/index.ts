@@ -8,6 +8,6 @@ interface Config {
 
 const config: Config = {
     serverPort: process.env.SERVER_PORT || '8080'
-}
+};
 
 export default config;

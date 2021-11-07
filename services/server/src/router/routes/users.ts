@@ -4,12 +4,12 @@ import { Service } from '../../types/services';
 const router = express.Router();
 
 interface Args {
-    helloWorldService: Service<string>;
+    usersService: Service<string>;
 }
 
-function init({ helloWorldService }: Args) {
+function init({ usersService }: Args) {
     router.get('/', async (req, res) => {
-        return res.send(helloWorldService.getGreetings());
+        return res.send(usersService.getAllUsers());
     });
 
     return router;

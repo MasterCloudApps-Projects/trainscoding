@@ -1,3 +1,3 @@
 export type Service<T> = {
-  [functName: string]: () => T;
+    [functName: string]: () => T;
 };
