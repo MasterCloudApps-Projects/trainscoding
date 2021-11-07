@@ -20,6 +20,14 @@ env:
 
 jobs:
 
+  lint-code:
+    name: Lint and fix code style
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Run eslint and prettier to lint and fix code style
+      run: make lint-fix
+
   run-tests-and-generate-docker-unit-test-image:
     name: Build docker image
     runs-on: ubuntu-20.04
