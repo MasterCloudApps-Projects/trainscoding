@@ -27,9 +27,12 @@ else
 endif
 
 .PHONY: lint
-lint:
+lint: node_modules
 	npm run lint
 
 .PHONY: lint-fix
-lint-fix:
+lint-fix: node_modules
 	npm run lint:fix
+
+node_modules:
+	npm ci
