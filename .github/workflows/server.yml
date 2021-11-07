@@ -107,6 +107,6 @@ jobs:
     - name: "Deploy server to Okteto"
       uses: okteto/pipeline@latest
       with:
-        name: pr-${{ github.repository }}-${{ github.sha }}
+        name: trainscoding-${{ github.sha }}
         timeout: 8m
         skipIfExists: true
