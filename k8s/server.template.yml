@@ -18,7 +18,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: server
-        image: javiergarciagon/trainscoding-server:0.0.5
+        image: %DOCKER_IMAGE%
         resources:
           requests:
             cpu: "0.1"

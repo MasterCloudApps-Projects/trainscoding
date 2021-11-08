@@ -4,9 +4,9 @@
     "description": "Web server running on NodeJS runtime, using Express framework.",
     "main": "src/index.ts",
     "scripts": {
-        "start": "node lib/src/index.js",
+        "start": "node dist/src/index.js",
         "dev": "nodemon",
-        "lint": "eslint . --ext .ts --format table --ignore-pattern '/lib/'",
+        "lint": "eslint . --ext .ts --format table --ignore-pattern '/dist/'",
         "lint:fix": "prettier --config ../../.prettierrc.js --write ./src --write ./config --write ./__tests__",
         "build": "tsc"
     },

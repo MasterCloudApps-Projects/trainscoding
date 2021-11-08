@@ -74,24 +74,36 @@ jobs:
     - name: Login to DockerHub
       run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
 
-    - name: Push newest Server image to DockerHub
+    - name: Create image variables
       run: |
         TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
-        IMAGE_VERSION=${{ github.sha }}.$TIMESTAMP
+        IMAGE_TAG=${{ github.sha }}.$TIMESTAMP
+        DOCKER_IMAGE=$DOCKERHUB_USER/$SERVER_IMAGE:$IMAGE_TAG
+        echo $IMAGE_TAG | xargs -I{} echo '::set-output name=IMAGE_TAG::{}'
+        echo $DOCKER_IMAGE | xargs -I{} echo '::set-output name=DOCKER_IMAGE::{}'
+      id: image-vars
+
+    - name: Add dynamic docker image name to server.yml
+      run: |
+        echo ${{ steps.image-vars.outputs.DOCKER_IMAGE }}
+        sed s,%DOCKER_IMAGE%,${{ steps.image-vars.outputs.DOCKER_IMAGE }},g k8s/server.template.yml > k8s/server.yml
+        cat k8s/server.yml
+
+    - name: Push newest Server image to DockerHub
+      run: |
         docker tag $SERVER_IMAGE $DOCKERHUB_USER/$SERVER_IMAGE:rc
-        docker tag $SERVER_IMAGE $DOCKERHUB_USER/$SERVER_IMAGE:$IMAGE_VERSION
+        docker tag $SERVER_IMAGE ${{ steps.image-vars.outputs.DOCKER_IMAGE }}
         docker image push --all-tags $DOCKERHUB_USER/$SERVER_IMAGE
 
     - name: Login to GitHub Docker Registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     - name: Push image to GitHub Docker Registry
+      id: push-to-github-registry
       run: |
         GITHUB_REPOSITORY=$(echo ${{ github.repository }} | awk '{print tolower($0)}')
-        TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
-        IMAGE_VERSION=${{ github.sha }}.$TIMESTAMP
         docker tag $SERVER_IMAGE ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE:rc
-        docker tag $SERVER_IMAGE ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE:$IMAGE_VERSION
+        docker tag $SERVER_IMAGE ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE:${{ steps.image-vars.outputs.IMAGE_TAG }}
         docker image push --all-tags ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE
 
     - name: Login to Okteto
@@ -109,4 +121,4 @@ jobs:
       with:
         name: trainscoding
         timeout: 8m
-        variables: "SERVER_PORT=8080"
+        variables: "SERVER_PORT=8080,DOCKER_IMAGE=${{ steps.image-vars.outputs.DOCKER_IMAGE }}"
