@@ -108,7 +108,7 @@ jobs:
       uses: okteto/apply@master
       with:
         namespace: trainscoding
-        manifest: ./k8s/server.yml
+        manifest: k8s/server.yml
 
     - name: "Push changes to Okteto's namespace"
       uses: okteto/push@master
