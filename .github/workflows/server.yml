@@ -104,8 +104,9 @@ jobs:
       with:
         name: trainscoding
 
-    - name: Deploy application
-      uses: okteto/deploy-stack@master
+    - name: "Trigger Okteto's pipeline"
+      uses: okteto/pipeline@latest
       with:
-        build: "true"
-        namespace: trainscoding
+        name: trainscoding
+        timeout: 8m
+        variables: "SERVER_PORT=8080"
