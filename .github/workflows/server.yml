@@ -104,9 +104,14 @@ jobs:
       with:
         name: trainscoding
 
-    - name: "Deploy server to Okteto"
-      uses: okteto/pipeline@latest
+    - name: "Deploy server"
+      uses: okteto/apply@master
       with:
-        name: trainscoding-${{ github.sha }}
-        timeout: 8m
-        skipIfExists: true
+        namespace: trainscoding
+        manifest: ./k8s
+
+    - name: "Push changes"
+      uses: okteto/push@master
+      with:
+        namespace: trainscoding
+        name: server-deploy
