@@ -9,7 +9,7 @@ COPY package-lock.json /usr/server
 
 RUN npm install
 
-COPY lib /usr/server/lib
+COPY dist /usr/server/dist
 
 EXPOSE ${SERVER_PORT}
 
