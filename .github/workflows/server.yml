@@ -105,13 +105,13 @@ jobs:
         name: trainscoding
 
     - name: "Deploy server"
-      uses: okteto/apply@master
+      uses: okteto/apply@main
       with:
         namespace: trainscoding
         manifest: ./k8s
 
     - name: "Push changes"
-      uses: okteto/push@master
+      uses: okteto/push@main
       with:
         namespace: trainscoding
         name: server-deploy
