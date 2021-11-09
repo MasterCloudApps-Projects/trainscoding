@@ -84,10 +84,7 @@ jobs:
       id: image-vars
 
     - name: Add dynamic docker image name to server.yml
-      run: |
-        echo ${{ steps.image-vars.outputs.DOCKER_IMAGE }}
-        sed s,%DOCKER_IMAGE%,${{ steps.image-vars.outputs.DOCKER_IMAGE }},g k8s/server.template.yml > k8s/server.yml
-        cat k8s/server.yml
+      run: sed s,%DOCKER_IMAGE%,${{ steps.image-vars.outputs.DOCKER_IMAGE }},g k8s/server.template.yml > k8s/server.yml
 
     - name: Push newest Server image to DockerHub
       run: |
@@ -106,19 +103,9 @@ jobs:
         docker tag $SERVER_IMAGE ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE:${{ steps.image-vars.outputs.IMAGE_TAG }}
         docker image push --all-tags ghcr.io/$GITHUB_REPOSITORY/$SERVER_IMAGE
 
-    - name: Login to Okteto
-      uses: okteto/login@latest
-      with:
-        token: ${{ secrets.OKTETO_TOKEN }}
-
-    - name: "Activate Okteto Namespace"
-      uses: okteto/namespace@latest
-      with:
-        name: trainscoding
-
-    - name: "Trigger Okteto's pipeline"
-      uses: okteto/pipeline@latest
-      with:
-        name: trainscoding
-        timeout: 8m
-        variables: "SERVER_PORT=8080,DOCKER_IMAGE=${{ steps.image-vars.outputs.DOCKER_IMAGE }}"
+    - name: Depoly to okteto, using kubectl and Okteto cli
+      run: |
+        curl https://get.okteto.com -sSfL | sh
+        okteto login --token ${{ secrets.OKTETO_TOKEN }}
+        okteto namespace
+        kubectl apply -f k8s/server.yml

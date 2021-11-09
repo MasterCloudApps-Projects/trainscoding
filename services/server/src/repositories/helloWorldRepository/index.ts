@@ -1,7 +1,7 @@
 import { Repository } from 'src/types/repositories';
 
 function getGreetings(): string {
-    return `Hello world! I'm using okteto!`;
+    return `Hello world! I'm using okteto, for real!`;
 }
 
 const helloWorldStore = {
