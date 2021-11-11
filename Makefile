@@ -13,6 +13,11 @@ build:
 	npm ci
 	npm run build:$(BUILD_SCOPE) --service=@trainscoding/$(SERVICE_NAME)
 
+.PHONY: build-all
+build-all:
+	npm ci
+	npm run build:$(BUILD_SCOPE)
+
 # Spin up development environment
 .PHONY: up
 up: create-env
