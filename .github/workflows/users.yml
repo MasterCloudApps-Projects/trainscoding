@@ -6,7 +6,8 @@ on:
     paths:
       - 'services/users/**'
       - 'docker/**'
-      - 'k8s/**'
+      - 'k8s/users.template.yml'
+      - 'k8s/ingress.yml'
       - '.github/workflows/users.yml'
       - 'Makefile*'
   workflow_dispatch:
