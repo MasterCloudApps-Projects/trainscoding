@@ -1,0 +1,111 @@
+name: Users workflow
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'services/users/**'
+      - 'docker/**'
+      - 'k8s/**'
+      - '.github/workflows/users.yml'
+      - 'Makefile*'
+  workflow_dispatch:
+
+env:
+  SCOPE: services/users
+  DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  UNIT_TEST_IMAGE: trainscoding-unit-tests
+  USERS_IMAGE: trainscoding-users
+
+jobs:
+
+  run-tests-and-generate-docker-unit-test-image:
+    name: Build docker image
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+
+    - name: Set up NodeJS 16
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Run eslint and prettier to lint and fix code style
+      run: make lint-fix
+
+    - name: Login to DockerHub
+      run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
+
+    - name: Test users service
+      run: SCOPE=services/users make test
+
+    - name: Build unit test image
+      run: |
+        docker build -t $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest -f docker/environment/test/Dockerfile-unit-tests .
+        docker tag $DOCKERHUB_USER/$UNIT_TEST_IMAGE $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest
+        docker image push --all-tags $DOCKERHUB_USER/$UNIT_TEST_IMAGE
+
+  build-and-push-service-image:
+    name: Build and push service's image
+    runs-on: ubuntu-20.04
+    needs: [run-tests-and-generate-docker-unit-test-image]
+
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+
+    - name: Set up NodeJS 16
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Build Service Users artifact
+      run: BUILD_SCOPE=service SERVICE_NAME=users make build
+
+    - name: Build docker image for USERS
+      run: |
+        TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
+        IMAGE_VERSION=${{ github.sha }}.$TIMESTAMP
+        docker build -t $USERS_IMAGE -f services/users/Dockerfile ./services/users
+
+    - name: Login to DockerHub
+      run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
+
+    - name: Create image variables
+      run: |
+        TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
+        IMAGE_TAG=${{ github.sha }}.$TIMESTAMP
+        DOCKER_IMAGE=$DOCKERHUB_USER/$USERS_IMAGE:$IMAGE_TAG
+        echo $IMAGE_TAG | xargs -I{} echo '::set-output name=IMAGE_TAG::{}'
+        echo $DOCKER_IMAGE | xargs -I{} echo '::set-output name=DOCKER_IMAGE::{}'
+      id: image-vars
+
+    - name: Add dynamic docker image name to users.yml
+      run: sed s,%DOCKER_IMAGE%,${{ steps.image-vars.outputs.DOCKER_IMAGE }},g k8s/users.template.yml > k8s/users.yml
+
+    - name: Push newest Users image to DockerHub
+      run: |
+        docker tag $USERS_IMAGE $DOCKERHUB_USER/$USERS_IMAGE:rc
+        docker tag $USERS_IMAGE ${{ steps.image-vars.outputs.DOCKER_IMAGE }}
+        docker image push --all-tags $DOCKERHUB_USER/$USERS_IMAGE
+
+    - name: Login to GitHub Docker Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Push image to GitHub Docker Registry
+      id: push-to-github-registry
+      run: |
+        GITHUB_REPOSITORY=$(echo ${{ github.repository }} | awk '{print tolower($0)}')
+        docker tag $USERS_IMAGE ghcr.io/$GITHUB_REPOSITORY/$USERS_IMAGE:rc
+        docker tag $USERS_IMAGE ghcr.io/$GITHUB_REPOSITORY/$USERS_IMAGE:${{ steps.image-vars.outputs.IMAGE_TAG }}
+        docker image push --all-tags ghcr.io/$GITHUB_REPOSITORY/$USERS_IMAGE
+
+    - name: Depoly to okteto, using kubectl and Okteto cli
+      run: |
+        curl https://get.okteto.com -sSfL | sh
+        okteto login --token ${{ secrets.OKTETO_TOKEN }}
+        okteto namespace
+        kubectl apply -f k8s/users.yml
