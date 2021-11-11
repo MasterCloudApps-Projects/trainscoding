@@ -15,8 +15,11 @@ env:
   SCOPE: services/server
   DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  OKTETO_TOKEN: ${{ secrets.OKTETO_TOKEN }}
   UNIT_TEST_IMAGE: trainscoding-unit-tests
   SERVER_IMAGE: trainscoding-server
+  SERVER_PORT: 8080
 
 jobs:
 
@@ -37,7 +40,7 @@ jobs:
       run: make lint-fix
 
     - name: Login to DockerHub
-      run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
 
     - name: Test server service
       run: SCOPE=services/server make test
@@ -71,9 +74,6 @@ jobs:
         IMAGE_VERSION=${{ github.sha }}.$TIMESTAMP
         docker build -t $SERVER_IMAGE -f services/server/Dockerfile ./services/server
 
-    - name: Login to DockerHub
-      run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
-
     - name: Create image variables
       run: |
         TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
@@ -83,8 +83,15 @@ jobs:
         echo $DOCKER_IMAGE | xargs -I{} echo '::set-output name=DOCKER_IMAGE::{}'
       id: image-vars
 
-    - name: Add dynamic docker image name to server.yml
-      run: sed s,%DOCKER_IMAGE%,${{ steps.image-vars.outputs.DOCKER_IMAGE }},g k8s/server.template.yml > k8s/server.yml
+    - name: Create server.yml file using template by replacing dynamic variables
+      run: |
+        sed \
+        -e s,%DOCKER_IMAGE%,${{ steps.image-vars.outputs.DOCKER_IMAGE }},g \
+        -e s,%SERVER_PORT%,$SERVER_PORT,g \
+        k8s/server.template.yml > k8s/server.yml
+
+    - name: Login to DockerHub
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
 
     - name: Push newest Server image to DockerHub
       run: |
@@ -93,7 +100,7 @@ jobs:
         docker image push --all-tags $DOCKERHUB_USER/$SERVER_IMAGE
 
     - name: Login to GitHub Docker Registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      run: echo $GITHUB_TOKEN | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     - name: Push image to GitHub Docker Registry
       id: push-to-github-registry
@@ -106,6 +113,6 @@ jobs:
     - name: Depoly to okteto, using kubectl and Okteto cli
       run: |
         curl https://get.okteto.com -sSfL | sh
-        okteto login --token ${{ secrets.OKTETO_TOKEN }}
+        okteto login --token $OKTETO_TOKEN
         okteto namespace
         kubectl apply -f k8s/server.yml
