@@ -1,0 +1,41 @@
+{
+  "name": "@trainscoding/users",
+  "version": "0.0.1",
+  "description": "Nodejs service to manage users ins Trainscoding app.",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node dist/src/index.js",
+    "dev": "nodemon",
+    "lint": "eslint . --ext .ts --format table --ignore-pattern '/dist/'",
+    "lint:fix": "prettier --config ../../.prettierrc.js --write ./src --write ./config --write ./__tests__",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasterCloudApps-Projects/trainscoding.git"
+  },
+  "keywords": [
+    "nodejs",
+    "users",
+    "microservice",
+    "express",
+    "REST",
+    "Google-Auth"
+  ],
+  "author": "Javier García González <javier@garciagon.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/MasterCloudApps-Projects/trainscoding/issues"
+  },
+  "homepage": "https://github.com/MasterCloudApps-Projects/trainscoding#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}

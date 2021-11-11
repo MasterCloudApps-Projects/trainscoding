@@ -15,8 +15,11 @@ env:
   SCOPE: services/users
   DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  OKTETO_TOKEN: ${{ secrets.OKTETO_TOKEN }}
   UNIT_TEST_IMAGE: trainscoding-unit-tests
   USERS_IMAGE: trainscoding-users
+  USERS_PORT: 8998
 
 jobs:
 
@@ -37,7 +40,7 @@ jobs:
       run: make lint-fix
 
     - name: Login to DockerHub
-      run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
 
     - name: Test users service
       run: SCOPE=services/users make test
@@ -71,9 +74,6 @@ jobs:
         IMAGE_VERSION=${{ github.sha }}.$TIMESTAMP
         docker build -t $USERS_IMAGE -f services/users/Dockerfile ./services/users
 
-    - name: Login to DockerHub
-      run: docker login -u $DOCKERHUB_USER -p "${{ secrets.DOCKERHUB_TOKEN }}"
-
     - name: Create image variables
       run: |
         TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
@@ -83,8 +83,15 @@ jobs:
         echo $DOCKER_IMAGE | xargs -I{} echo '::set-output name=DOCKER_IMAGE::{}'
       id: image-vars
 
-    - name: Add dynamic docker image name to users.yml
-      run: sed s,%DOCKER_IMAGE%,${{ steps.image-vars.outputs.DOCKER_IMAGE }},g k8s/users.template.yml > k8s/users.yml
+    - name: Create users.yml file using template by replacing dynamic variables
+      run: |
+        sed \
+        -e s,%DOCKER_IMAGE%,${{ steps.image-vars.outputs.DOCKER_IMAGE }},g \
+        -e s,%USERS_PORT%,$USERS_PORT,g \
+        k8s/users.template.yml > k8s/users.yml
+
+    - name: Login to DockerHub
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
 
     - name: Push newest Users image to DockerHub
       run: |

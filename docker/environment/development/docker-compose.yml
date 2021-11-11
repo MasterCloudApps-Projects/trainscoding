@@ -10,3 +10,13 @@ services:
     ports:
     - "${SERVER_PORT}:${SERVER_PORT}"
     command: ["npm", "start"]
+
+  users:
+    image: javiergarciagon/trainscoding-users
+    environment:
+      SERVER_PORT: ${USERS_PORT}
+    env_file:
+    - ../../../services/users/.env.users
+    ports:
+    - "${USERS_PORT}:${USERS_PORT}"
+    command: ["npm", "start"]

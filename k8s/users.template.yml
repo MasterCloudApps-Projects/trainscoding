@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: users
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: users
+        image: %DOCKER_IMAGE%
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: 64Mi
+          limits:
+            cpu: "0.25"
+            memory: 128Mi
+        ports:
+        - containerPort: %USERS_PORT%
+        env:
+        - name: USERS_PORT
+          value: "%USERS_PORT%"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users
+  labels:
+    app: users
+spec:
+  ports:
+  - port: %USERS_PORT%
+  selector:
+    app: users
+  type: ClusterIP
