@@ -43,14 +43,14 @@ jobs:
     - name: Login to DockerHub
       run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
 
+    # - name: Build updated unit test image
+    #   run: |
+    #     docker build -t $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest -f docker/environment/test/Dockerfile-unit-tests .
+    #     docker tag $DOCKERHUB_USER/$UNIT_TEST_IMAGE $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest
+    #     docker image push --all-tags $DOCKERHUB_USER/$UNIT_TEST_IMAGE
+
     - name: Test users service
       run: SCOPE=services/users make test
-
-    - name: Build unit test image
-      run: |
-        docker build -t $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest -f docker/environment/test/Dockerfile-unit-tests .
-        docker tag $DOCKERHUB_USER/$UNIT_TEST_IMAGE $DOCKERHUB_USER/$UNIT_TEST_IMAGE:latest
-        docker image push --all-tags $DOCKERHUB_USER/$UNIT_TEST_IMAGE
 
   build-and-push-service-image:
     name: Build and push service's image

@@ -6,4 +6,8 @@ services:
     image: javiergarciagon/trainscoding-unit-tests:latest
     environment:
       SCOPE: ${SCOPE}
-    command: ["npm", "t", "--", "--projects", "${SCOPE}"]
+    volumes:
+      - ../../../:/trainscoding-test
+    command: |
+      - npm ci
+      - npm t -- --projects ${SCOPE}
