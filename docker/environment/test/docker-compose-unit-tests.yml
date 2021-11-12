@@ -4,8 +4,4 @@ services:
 
   unit-tests:
     image: javiergarciagon/trainscoding-unit-tests:latest
-    volumes:
-      - ../../../:/trainscoding-test
-    command: |
-      - npm ci
-      - npm t
+    command: ["npm", "t"]
