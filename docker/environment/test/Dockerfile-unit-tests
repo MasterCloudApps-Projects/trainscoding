@@ -7,7 +7,6 @@ COPY packages /trainscoding-tests/packages
 COPY package.json /trainscoding-tests
 COPY package-lock.json /trainscoding-tests
 COPY lerna.json /trainscoding-tests
-COPY tsconfig.json /trainscoding-tests
 COPY babel.config.js /trainscoding-tests
 COPY jest.base.config.js /trainscoding-tests
 COPY jest.config.js /trainscoding-tests
