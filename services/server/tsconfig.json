@@ -1,5 +1,4 @@
 {
-    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "moduleResolution": "Node",
         "resolveJsonModule": true,
@@ -11,8 +10,14 @@
         "outDir": "dist",
         "rootDir": "./",
         "baseUrl": "./",
-        "composite": true
+        "composite": true,
+        "allowJs": false,
+        "typeRoots": ["node_modules/@types"],
+        "sourceMap": true,
+        "inlineSources": true,
+        "sourceRoot": "/",
+        "downlevelIteration": true
     },
     "include": ["./**/*.ts"],
-    "exclude": ["node_modules", "dist", "__test__"]
+    "exclude": ["node_modules", "dist", "__tests__"]
 }
