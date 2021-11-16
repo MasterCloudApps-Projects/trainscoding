@@ -4,13 +4,13 @@ function attemptLogin(): string {
     return `Attempting loigin`;
 }
 
-const helloWorldStore = {
+const loginStore = {
     attemptLogin
 };
 
 function init(/* It should receive a model object if it exists */): Repository<string | void> {
     return {
-        ...helloWorldStore,
+        ...loginStore,
         getSchemas: () => {}
     };
 }

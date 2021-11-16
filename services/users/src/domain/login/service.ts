@@ -4,11 +4,11 @@ interface Props {
     loginRepository: Repository<void>;
 }
 
-interface HelloWorldService {
+interface loginService {
     attemptLogin: () => void;
 }
 
-function init({ loginRepository }: Props): HelloWorldService {
+function init({ loginRepository }: Props): loginService {
     return {
         attemptLogin: () => loginRepository.attemptLogin()
     };
