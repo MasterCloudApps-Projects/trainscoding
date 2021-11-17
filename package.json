@@ -15,7 +15,7 @@
         "lint:fix": "lerna run lint:fix",
         "clean": "lerna run --parallel clean",
         "publish": "lerna publish",
-        "publish:ci": "lerna publish --yes",
+        "publish:ci": "lerna publish from-git --yes",
         "version:patch:ci": "lerna version patch --yes",
         "postinstall": "npm run bootstrap",
         "start": "run-p build && docker-compose up",
