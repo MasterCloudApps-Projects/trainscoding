@@ -9,7 +9,7 @@ function init(services) {
     app.use(express.json());
     app.use(morgan(':remote-addr :method :url'));
 
-    app.use('/api/hi', helloWorldRouter.init(services));
+    app.use('/api', helloWorldRouter.init(services));
 
     return app;
 }

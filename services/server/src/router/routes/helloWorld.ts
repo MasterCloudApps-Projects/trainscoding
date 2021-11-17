@@ -8,7 +8,7 @@ interface Args {
 }
 
 function init({ helloWorldService }: Args) {
-    router.get('/', async (req, res) => {
+    router.get('/hi', async (req, res) => {
         return res.send(helloWorldService.getGreetings());
     });
 

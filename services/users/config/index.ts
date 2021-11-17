@@ -7,7 +7,7 @@ interface Config {
 }
 
 const config: Config = {
-    usersPort: process.env.SERVER_PORT || '8998'
+    usersPort: process.env.USERS_PORT || '8998'
 };
 
 export default config;

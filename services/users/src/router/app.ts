@@ -9,7 +9,7 @@ function init(services) {
     app.use(express.json());
     app.use(morgan(':remote-addr :method :url'));
 
-    app.use('/login', loginRouter.init(services));
+    app.use('/users', loginRouter.init(services));
 
     return app;
 }

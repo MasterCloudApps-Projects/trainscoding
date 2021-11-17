@@ -2,21 +2,51 @@ version: "3.9"
 
 services:
   server:
-    image: javiergarciagon/trainscoding-server
+    build: .
+    container_name: "server"
     environment:
       SERVER_PORT: ${SERVER_PORT}
+      VIRTUAL_HOST: trainscoding
+      VIRTUAL_PORT: ${SERVER_PORT}
     env_file:
-    - ../../../services/server/.env.server
+    - ${ROOT_DIR}/services/server/.env.server
     ports:
     - "${SERVER_PORT}:${SERVER_PORT}"
-    command: ["npm", "start"]
+    volumes:
+    - ${ROOT_DIR}/services/server:/app
+    command: sh -c 'npm i && npm run dev'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.server.rule=PathPrefix(`/api/`)"
 
   users:
-    image: javiergarciagon/trainscoding-users
+    build: .
+    container_name: "users"
     environment:
-      SERVER_PORT: ${USERS_PORT}
+      USERS_PORT: ${USERS_PORT}
+      VIRTUAL_HOST: trainscoding
+      VIRTUAL_PORT: ${USERS_PORT}
     env_file:
-    - ../../../services/users/.env.users
+    - ${ROOT_DIR}/services/users/.env.users
     ports:
     - "${USERS_PORT}:${USERS_PORT}"
-    command: ["npm", "start"]
+    volumes:
+    - ${ROOT_DIR}/services/users:/app
+    command: sh -c 'npm i && npm run dev'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.users.rule=PathPrefix(`/users/`)"
+
+  traefik:
+    image: "traefik:v2.4"
+    container_name: "traefik"
+    command:
+      # - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"

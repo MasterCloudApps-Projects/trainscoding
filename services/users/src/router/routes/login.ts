@@ -8,7 +8,7 @@ interface Args {
 }
 
 function init({ loginService }: Args) {
-    router.get('/', async (req, res) => {
+    router.get('/login', async (req, res) => {
         return res.send(loginService.attemptLogin());
     });
 

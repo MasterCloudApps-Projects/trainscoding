@@ -1,4 +1,4 @@
-FROM node:16-alpine3.11
+FROM node:17-alpine3.12
 
 ENV NODE_ENV production
 
@@ -11,6 +11,6 @@ RUN npm install
 
 COPY dist /usr/server/dist
 
-EXPOSE ${SERVER_PORT}
+EXPOSE ${USERS_PORT}
 
 CMD ["npm", "start"]
