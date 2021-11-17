@@ -41,3 +41,8 @@ lint-fix: node_modules
 
 node_modules:
 	npm ci
+
+.PHONY:
+publish:
+	npm run version:patch:ci
+	npm run publish:ci
