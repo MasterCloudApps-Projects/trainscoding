@@ -6,7 +6,7 @@ on:
     paths:
       - 'services/server/**'
       - 'docker/**'
-      - 'k8s/server.template.yml'
+      - 'k8s/server.template'
       - 'k8s/ingress.yml'
       - '.github/workflows/server.yml'
       - 'Makefile*'
@@ -89,7 +89,7 @@ jobs:
         sed \
         -e s,%DOCKER_IMAGE%,${{ steps.image-vars.outputs.DOCKER_IMAGE }},g \
         -e s,%SERVER_PORT%,$SERVER_PORT,g \
-        k8s/server.template.yml > k8s/server.yml
+        k8s/server.template > k8s/server.yml
 
     - name: Login to DockerHub
       run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
