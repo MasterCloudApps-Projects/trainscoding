@@ -1,0 +1,28 @@
+name: Ingress workflow
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'k8s/ingress.yml'
+  workflow_dispatch:
+
+env:
+  OKTETO_TOKEN: ${{ secrets.OKTETO_TOKEN }}
+
+jobs:
+
+  apply-ingress:
+    name: Build docker image
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+
+    - name: Depoly to okteto, using kubectl and Okteto cli
+      run: |
+        curl https://get.okteto.com -sSfL | sh
+        okteto login --token ${{ secrets.OKTETO_TOKEN }}
+        okteto namespace
+        kubectl apply -f k8s/ingress.yml

@@ -19,9 +19,6 @@ spec:
             name: server
             port:
               number: 8080
-   - host: trainscoding-javiergarciagonzalez.cloud.okteto.net
-     http:
-      paths:
       - path: /users
         pathType: Prefix
         backend:
