@@ -24,6 +24,6 @@ jobs:
     - name: Depoly to okteto, using kubectl and Okteto cli
       run: |
         curl https://get.okteto.com -sSfL | sh
-        okteto login --token ${{ secrets.OKTETO_TOKEN }}
+        okteto login --token $OKTETO_TOKEN
         okteto namespace
         kubectl apply -f k8s/ingress.yml
