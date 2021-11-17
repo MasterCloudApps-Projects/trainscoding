@@ -12,13 +12,20 @@ env:
 
 jobs:
 
-  apply-ingress:
+  trigger-pipeline-and-apply-ingress:
     name: Build docker image
     runs-on: ubuntu-20.04
 
     steps:
     - name: Clone repository
       uses: actions/checkout@v2
+
+    - name: "Trigger the pipeline"
+      uses: okteto/pipeline@latest
+      with:
+        name: trainscoding
+        timeout: 8m
+        skipIfExists: true
 
     - name: Depoly to okteto, using kubectl and Okteto cli
       run: |
