@@ -22,7 +22,7 @@ env:
 jobs:
 
   run-tests-and-generate-docker-unit-test-image:
-    name: Build docker image
+    name: Users workflow
     runs-on: ubuntu-20.04
 
     steps:

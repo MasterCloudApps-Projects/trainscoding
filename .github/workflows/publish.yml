@@ -10,8 +10,8 @@ env:
 
 jobs:
 
-  apply-ingress:
-    name: Build docker image
+  version-and-publish:
+    name: Bump packages version and publish them
     runs-on: ubuntu-20.04
 
     steps:

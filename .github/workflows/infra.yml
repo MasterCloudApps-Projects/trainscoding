@@ -14,7 +14,7 @@ env:
 jobs:
 
   apply-ingress:
-    name: Build docker image
+    name: Update ingress config in Okteto
     runs-on: ubuntu-20.04
 
     steps:
