@@ -6,8 +6,6 @@ services:
     container_name: "server"
     environment:
       SERVER_PORT: ${SERVER_PORT}
-      VIRTUAL_HOST: trainscoding
-      VIRTUAL_PORT: ${SERVER_PORT}
     env_file:
     - ${ROOT_DIR}/services/server/.env.server
     ports:
@@ -24,8 +22,6 @@ services:
     container_name: "users"
     environment:
       USERS_PORT: ${USERS_PORT}
-      VIRTUAL_HOST: trainscoding
-      VIRTUAL_PORT: ${USERS_PORT}
     env_file:
     - ${ROOT_DIR}/services/users/.env.users
     ports:
