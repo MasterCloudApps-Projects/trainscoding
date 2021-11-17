@@ -5,11 +5,8 @@ on:
     branches: [ main ]
     paths:
       - 'services/users/**'
-      - 'docker/**'
       - 'k8s/users.template'
-      - 'k8s/ingress.yml'
       - '.github/workflows/users.yml'
-      - 'Makefile*'
   workflow_dispatch:
 
 env:
