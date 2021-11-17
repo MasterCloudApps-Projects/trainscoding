@@ -1,6 +1,6 @@
 {
     "name": "@trainscoding/prettier-config",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "description": "Shareable configuration for prettier that is used by all packages in trainscoding repository",
     "keywords": [
         "Prettier",

@@ -1,6 +1,6 @@
 {
     "name": "@trainscoding/server",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "description": "Web server running on NodeJS runtime, using Express framework.",
     "main": "src/index.ts",
     "scripts": {
