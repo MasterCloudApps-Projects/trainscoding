@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths:
       - 'k8s/ingress.yml'
+      - '.github/workflows/infra.yml'
   workflow_dispatch:
 
 env:
