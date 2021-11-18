@@ -1,6 +1,6 @@
 {
   "name": "@trainscoding/users",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "Nodejs service to manage users ins Trainscoding app.",
   "main": "src/index.ts",
   "scripts": {
