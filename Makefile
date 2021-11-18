@@ -44,5 +44,4 @@ node_modules:
 
 .PHONY:
 publish:
-	npm run version:patch:ci
 	npm run publish:ci
