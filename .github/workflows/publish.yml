@@ -27,7 +27,7 @@ jobs:
 
     - name: lerna changed
       id: lerna-changed
-      run: echo "::set-output name=count::$(npx lerna changed|wc -l)"
+      run: echo "::set-output name=count::$(npm run changed|wc -l)"
 
     - name: Version and publish libraries
       if: ${{ steps.lerna-changed.outputs.count > 0 }}

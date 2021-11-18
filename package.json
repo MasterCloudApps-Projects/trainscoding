@@ -14,6 +14,7 @@
         "lint": "lerna run lint",
         "lint:fix": "lerna run lint:fix",
         "clean": "lerna run --parallel clean",
+        "changed": "lerna changed",
         "publish": "lerna publish",
         "publish:patch:ci": "lerna publish patch --yes",
         "postinstall": "npm run bootstrap",
