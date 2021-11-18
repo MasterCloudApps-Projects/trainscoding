@@ -41,8 +41,7 @@ jobs:
 
     - name: Version and publish libraries
       if: ${{ steps.lerna-changed.outputs.count > 0 }}
-      run: |
-        make publish
+      run: make publish
 
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
