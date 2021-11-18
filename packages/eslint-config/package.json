@@ -1,6 +1,6 @@
 {
     "name": "@trainscoding/eslint-config",
-    "version": "0.1.16",
+    "version": "0.1.17",
     "description": "Shareble configuration for eslint that is used for all packages in trainscoding repository",
     "keywords": [
         "Eslint",
