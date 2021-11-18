@@ -17,7 +17,6 @@ jobs:
       with:
         all_commits: true
         all_tags: true
-        persist-credentials: false
         fetch-depth: 0
 
     - uses: actions/setup-node@v2
