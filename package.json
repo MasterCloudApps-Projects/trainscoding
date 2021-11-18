@@ -16,7 +16,7 @@
         "clean": "lerna run --parallel clean",
         "changed": "lerna changed",
         "publish": "lerna publish",
-        "publish:patch:ci": "lerna publish patch --yes",
+        "publish:ci": "lerna publish from-git --yes",
         "postinstall": "npm run bootstrap",
         "start": "run-p build && docker-compose up",
         "test": "jest",

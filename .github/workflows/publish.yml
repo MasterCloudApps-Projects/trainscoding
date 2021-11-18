@@ -17,7 +17,8 @@ jobs:
       with:
         all_commits: true
         all_tags: true
-        fetch_depth: 0
+        persist-credentials: false
+        fetch-depth: 0
 
     - uses: actions/setup-node@v2
       with:
@@ -29,12 +30,20 @@ jobs:
         git config user.email "${{ secrets.GIT_EMAIL }}"
         git config user.name "${{ secrets.GIT_USERNAME }}"
 
+    - name: Bootstrap packages
+      run: npm run bootstrap
+
+    - run: npm config set access public
+
     - name: lerna changed
       id: lerna-changed
       run: echo "::set-output name=count::$(npm run changed|wc -l)"
 
     - name: Version and publish libraries
       if: ${{ steps.lerna-changed.outputs.count > 0 }}
-      run: make publish
+      run: |
+        npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+        make publish
+
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
