@@ -33,8 +33,6 @@ jobs:
     - name: Bootstrap packages
       run: npm run bootstrap
 
-    - run: npm config set access public
-
     - name: lerna changed
       id: lerna-changed
       run: echo "::set-output name=count::$(npm run changed|wc -l)"
