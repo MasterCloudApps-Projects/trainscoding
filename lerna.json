@@ -3,15 +3,16 @@
     "packages/*",
     "services/*"
   ],
-  "version": "0.1.13",
+  "version": "0.1.14",
   "npmClient": "npm",
   "ignoreChanges": [
     "services/**"
   ],
-  "commands": {
-      "version": {
-          "ignore":
-          ["services/**"]
-      }
+  "command": {
+    "version": {
+      "ignore": [
+        "services/**"
+      ]
+    }
   }
 }
