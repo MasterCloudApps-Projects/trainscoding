@@ -14,4 +14,4 @@ npm run dev
 ```
 
 ## Authorization and Authentication
-// TODO
+It does not apply in this example service
