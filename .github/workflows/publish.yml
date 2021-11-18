@@ -14,6 +14,9 @@ jobs:
     steps:
     - name: Clone repository
       uses: actions/checkout@v2
+      with:
+        all_commits: true
+        all_tags: true
 
     - uses: actions/setup-node@v2
       with:
