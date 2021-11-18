@@ -42,7 +42,6 @@ jobs:
     - name: Version and publish libraries
       if: ${{ steps.lerna-changed.outputs.count > 0 }}
       run: |
-        npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
         make publish
 
       env:
