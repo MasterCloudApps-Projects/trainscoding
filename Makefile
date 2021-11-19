@@ -8,6 +8,11 @@ BUILD_SCOPE:=all
 create-env:
 	@./scripts/create-env
 
+
+.PHONY:
+bootstrap:
+	npm run bootstrap
+
 .PHONY: build
 build:
 	npm ci
