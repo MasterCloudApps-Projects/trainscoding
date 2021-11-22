@@ -6,4 +6,4 @@ services:
     image: javiergarciagon/trainscoding-unit-tests:latest
     environment:
       SCOPE: ${SCOPE}
-    command: ["npm", "t", "--", "--projects", "${SCOPE}"]
+    command: ["npm", "t", "--", "--roots", "${SCOPE}"]
