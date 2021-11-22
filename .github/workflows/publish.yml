@@ -32,7 +32,7 @@ jobs:
     - name: Bootstrap packages
       run: npm run bootstrap
 
-    - name: Test server service
+    - name: Test libraries
       run: SCOPE=packages make test
 
     - name: lerna changed
