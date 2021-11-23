@@ -24,6 +24,11 @@ jobs:
         node-version: '17'
         registry-url: 'https://registry.npmjs.com'
 
+    - name: Install project dependencies
+      run: |
+        npm ci
+        echo "$GITHUB_WORKSPACE/node_modules/.bin/" >> $GITHUB_PATH
+
     - name: lerna changed
       id: lerna-changed
       run: echo "::set-output name=count::$(npm run changed|wc -l)"
