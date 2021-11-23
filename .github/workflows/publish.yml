@@ -24,24 +24,26 @@ jobs:
         node-version: '17'
         registry-url: 'https://registry.npmjs.com'
 
+    - name: lerna changed
+      id: lerna-changed
+      run: echo "::set-output name=count::$(npm run changed|wc -l)"
+
     - name: git config user
+      if: ${{ steps.lerna-changed.outputs.count > 0 }}
       run: |
         git config user.email "${{ secrets.GIT_EMAIL }}"
         git config user.name "${{ secrets.GIT_USERNAME }}"
 
     - name: Bootstrap packages
+      if: ${{ steps.lerna-changed.outputs.count > 0 }}
       run: npm run bootstrap
 
     - name: Test libraries
+      if: ${{ steps.lerna-changed.outputs.count > 0 }}
       run: SCOPE=packages make test
-
-    - name: lerna changed
-      id: lerna-changed
-      run: echo "::set-output name=count::$(npm run changed|wc -l)"
 
     - name: Version and publish libraries
       if: ${{ steps.lerna-changed.outputs.count > 0 }}
       run: make publish
-
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
