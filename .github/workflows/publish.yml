@@ -31,7 +31,7 @@ jobs:
 
     - name: lerna changed
       id: lerna-changed
-      run: echo "::set-output name=count::$(npm run changed|wc -l)"
+      run: echo "::set-output name=count::$(lerna changed|wc -l)"
 
     - name: git config user
       if: ${{ steps.lerna-changed.outputs.count > 0 }}
