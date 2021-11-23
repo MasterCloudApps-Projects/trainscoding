@@ -8,7 +8,6 @@ COPY package.json /usr/users
 COPY package-lock.json /usr/users
 
 RUN npm install
-RUN npm run build
 
 COPY dist /usr/users/dist
 
