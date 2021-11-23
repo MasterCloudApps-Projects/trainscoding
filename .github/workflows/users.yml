@@ -94,7 +94,6 @@ jobs:
 
     - name: Push newest Users image to DockerHub
       run: |
-        docker tag $USERS_IMAGE $DOCKERHUB_USER/$USERS_IMAGE:rc
         docker tag $USERS_IMAGE ${{ steps.image-vars.outputs.DOCKER_IMAGE }}
         docker image push --all-tags $DOCKERHUB_USER/$USERS_IMAGE
 
@@ -105,7 +104,6 @@ jobs:
       id: push-to-github-registry
       run: |
         GITHUB_REPOSITORY=$(echo ${{ github.repository }} | awk '{print tolower($0)}')
-        docker tag $USERS_IMAGE ghcr.io/$GITHUB_REPOSITORY/$USERS_IMAGE:rc
         docker tag $USERS_IMAGE ghcr.io/$GITHUB_REPOSITORY/$USERS_IMAGE:${{ steps.image-vars.outputs.IMAGE_TAG }}
         docker image push --all-tags ghcr.io/$GITHUB_REPOSITORY/$USERS_IMAGE
 
