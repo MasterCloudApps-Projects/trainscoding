@@ -1,11 +1,24 @@
 # `@trainscoding/prettier-config`
 
-> TODO: description
+Javascript module, published on NPM Registry, that contains the Prettier configuration used in Trainscoding project.
 
-## Usage
+This module is public and it can be used in any regular project. It adds a limited set of rules on top of Prettier's rules.
+These are:
 
 ```
-const prettierConfig = require('@trainscoding/prettier-config');
+printWidth: 120
+singleQuote: true
+tabWidth: 4
+trailingComma: 'none'
+arrowParens: 'avoid'
+```
 
-// TODO: DEMONSTRATE API
+
+## Usage
+Extend this module in your prettier configuration file of your project. Example:
+```
+// .prettierrc
+{
+  "prettier": "@trainscoding/prettier-config"
+}
 ```
