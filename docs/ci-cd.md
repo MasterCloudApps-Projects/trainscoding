@@ -21,6 +21,7 @@ Makefiles are used at the root of the project to define the recipes for some gen
 
 The list of targets are:
 - **create-env**: help to create all environment files for the project. It comes in handy when the project has been cloned and development is about to start.
+
 - **build**: it is used by Github Actions. It accepts environment variables that condition its behaviour. That is to say, it is possible to build the whole project (all its packages and services) at once, or just select the specific component that needs to be built.
 
 - **up**: it launches the development environment. It uses [docker-compose](https://docs.docker.com/compose/) to spin up all the services that are needed to develop new functionality.
@@ -37,5 +38,9 @@ For small packages like [eslint-config](https://github.com/MasterCloudApps-Proje
 ## Setup
 
 ### Services
-For every change in services' code, a Github Actions workflow is dispatched in Github. The pipeline execution consists of testing and building the image that contains the newest version of the code. If everything goes well, new docker images get generated and tagged, and then, published on Docker registries.
-Once new Docker images have been generated, these are used by Kubernetes to deploy a new version of the application in an automated way.
+For every change in services' code, a Github Actions workflow is dispatched. The pipeline execution consists of testing and building the image that contains the newest version of the code. If everything goes well, new docker images get generated and tagged, and then, published on Docker registries.
+
+Once new Docker images have been generated, these are used by Kubernetes to deploy a new version of the application in an automated way. More specifically, the services get deployed to the cloud provider Okteto by using its CLI tool at the end of the Github Actions workflow. Before applying any new resource to the Kubernetes cluster for updateing the services deployed in production, a new yaml file has been created. This file contains the reference for the Docker image and its new tag and the other dynamic variables (i.e. ports for accessing the services).
+
+### Libraries
+Using [Lerna](https://github.com/lerna/lerna/), it is possible to identify what packages has changed since last published version. For every commit to `main` branch, Lerna is executed to detect which packages has been changed and then, by reading commit messages that follow [Conventional Commits](https://www.conventionalcommits.org/) specification, a new version will be published following [SemVer](https://semver.org/lang/es/) rules.
