@@ -25,7 +25,7 @@ Trainscoding consists of two libraries that are used to manage code's quality in
 ![Users service workflow](https://github.com/MasterCloudApps-Projects/trainscoding/actions/workflows/users.yml/badge.svg)
 
 
-## Usage
+## Development
 
 ### Prerequisites
 
@@ -38,20 +38,27 @@ Trainscoding consists of two libraries that are used to manage code's quality in
 ``` sh
 $ make create-env
 ```
-Once the new environment files are created, you need to fill in the values for the variables that these files contain.
+Once the new environment files are created,** you need to fill** in the values for the variables that these files contain.
 
 #### Run local environment
 ``` sh
 $ make up
 ```
+Runs all services available in Trainscoding using [Docker Compose](https://docs.docker.com/compose/) and a local instance of [Traefik Proxy](https://doc.traefik.io/traefik/).
+
+<p align="center">
+  <img src="https://github.com/MasterCloudApps-Projects/trainscoding/blob/main/docs/images/local-dev.jpg?raw=true" alt="Trainscoding cover image"/>
+</p>
 
 #### Check it "live"!
-Go to: `localhost:8080/api/hi` to get a hello world message.
-
+##### Server endpoint example
+Go to: `localhost/api/hi` to get a hello world message.
+##### Users endpoint example
+Go to: `localhost/users/login` to get a hello world message.
 
 It will spin up all services that are involved in Trainscoding, such as:
 - Trainscoding Server
-- ...TBD
+- Traincoding Users
 
 
 
