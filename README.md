@@ -51,9 +51,9 @@ Runs all services available in Trainscoding using [Docker Compose](https://docs.
 </p>
 
 #### Check it "live"!
-##### Server endpoint example
+##### [Server](https://github.com/MasterCloudApps-Projects/trainscoding/tree/main/services/server) endpoint example
 Go to: `localhost/api/hi` to get a hello world message.
-##### Users endpoint example
+##### [Users](https://github.com/MasterCloudApps-Projects/trainscoding/tree/main/services/users) endpoint example
 Go to: `localhost/users/login` to get a hello world message.
 
 It will spin up all services that are involved in Trainscoding, such as:
