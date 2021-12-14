@@ -18,6 +18,7 @@ for f; do
         else
             echo "File: \"$newFileName\" have been created."
             echo "Do not forget to add values to the new .env file(s)! 🚀"
+            echo "For development purposes, also fill the .env file in docker/environment/developemnt/"
         fi
     fi
 done' sh {} +
