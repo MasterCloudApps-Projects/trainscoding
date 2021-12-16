@@ -4,21 +4,23 @@ set -e
 # Creates a new .env* file per every `example.env*` that exists in this repository.
 # It will only create those that doesn't exist yet, and it won't override the existing ones.
 find . -name 'example.env*' -type f -exec sh -c '
+echo "Generating environment files":
 for f; do
 
     newFileName=${f%/*}/${f##*/example}
 
     if [ ! -f ${newFileName} ]
     then
-        echo "Generating environment files"
         cp -n "$f" "${newFileName}"
         if [ $? -ne 0 ]
         then
             echo "File: $(newFileName) could not been created."
         else
             echo "File: \"$newFileName\" have been created."
-            echo "Do not forget to add values to the new .env file(s)! 🚀"
-            echo "For development purposes, also fill the .env file in docker/environment/developemnt/"
         fi
+        echo "----------------------------"
     fi
 done' sh {} +
+echo $'\n'
+echo "Do not forget to add values to the new .env file(s)! 🚀"
+echo "For development purposes, also fill the .env file in docker/environment/developemnt/"
