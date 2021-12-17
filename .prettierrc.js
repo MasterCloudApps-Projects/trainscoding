@@ -1,3 +1,3 @@
 module.exports = {
-    prettier: "@trainscoding/prettier-config"
+    ...require('@trainscoding/prettier-config')
 };

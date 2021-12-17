@@ -1,19 +1,17 @@
-import { Repository } from "src/types/repositories";
+import { Repository } from 'src/types/repositories';
 
 function getGreetings(): string {
     return `Hello world! I'm using okteto, for real! inside a container!`;
 }
 
 const helloWorldStore = {
-    getGreetings,
+    getGreetings
 };
 
-function init(/* It should receive a model object if exists */): Repository<
-    string | void
-> {
+function init(/* It should receive a model object if exists */): Repository<string | void> {
     return {
         ...helloWorldStore,
-        getSchemas: () => {},
+        getSchemas: () => {}
     };
 }
 

@@ -1,4 +1,4 @@
-import { Repository } from "../../types/repositories/index";
+import { Repository } from '../../types/repositories/index';
 
 interface Props {
     helloWorldRepository: Repository<void>;
@@ -10,7 +10,7 @@ interface HelloWorldService {
 
 function init({ helloWorldRepository }: Props): HelloWorldService {
     return {
-        getGreetings: () => helloWorldRepository.getGreetings(),
+        getGreetings: () => helloWorldRepository.getGreetings()
     };
 }
 

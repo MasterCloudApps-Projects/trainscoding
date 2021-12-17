@@ -1,4 +1,4 @@
-import dotEnv from "dotenv";
+import dotEnv from 'dotenv';
 
 dotEnv.config();
 
@@ -7,7 +7,7 @@ interface Config {
 }
 
 const config: Config = {
-    usersPort: process.env.USERS_PORT || "8998",
+    usersPort: process.env.USERS_PORT || '8998'
 };
 
 export default config;
