@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/MasterCloudApps-Projects/trainscoding/compare/@trainscoding/eslint-config@1.1.0...@trainscoding/eslint-config@1.2.0) (2021-12-17)
+
+
+### Features
+
+* remove unnecesary rule ([5d93356](https://github.com/MasterCloudApps-Projects/trainscoding/commit/5d933567105dee01782fe7b0c1365d8adc1247a0))
+
+
+
+
+
 # [1.1.0](https://github.com/MasterCloudApps-Projects/trainscoding/compare/@trainscoding/eslint-config@1.0.1...@trainscoding/eslint-config@1.1.0) (2021-12-17)
 
 
