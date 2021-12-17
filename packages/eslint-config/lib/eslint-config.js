@@ -5,8 +5,5 @@ module.exports = {
         node: true,
         jest: true
     },
-    extends: ['eslint:recommended'],
-    rules: {
-        indent: ['error', 4]
-    }
+    extends: ['eslint:recommended']
 };
