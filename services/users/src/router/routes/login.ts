@@ -1,5 +1,5 @@
-import express from 'express';
-import { Service } from '../../types/services';
+import express from "express";
+import { Service } from "../../types/services";
 
 const router = express.Router();
 
@@ -8,7 +8,7 @@ interface Args {
 }
 
 function init({ loginService }: Args) {
-    router.get('/login', async (req, res) => {
+    router.get("/login", async (req, res) => {
         return res.send(loginService.attemptLogin());
     });
 

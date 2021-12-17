@@ -1,4 +1,4 @@
-import dotEnv from 'dotenv';
+import dotEnv from "dotenv";
 
 dotEnv.config();
 
@@ -7,7 +7,7 @@ interface Config {
 }
 
 const config: Config = {
-    serverPort: process.env.SERVER_PORT || '8080'
+    serverPort: process.env.SERVER_PORT || "8080",
 };
 
 export default config;

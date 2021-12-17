@@ -1,17 +1,19 @@
-import { Repository } from 'src/types/repositories';
+import { Repository } from "src/types/repositories";
 
 function attemptLogin(): string {
     return `Attempting loigin`;
 }
 
 const loginStore = {
-    attemptLogin
+    attemptLogin,
 };
 
-function init(/* It should receive a model object if it exists */): Repository<string | void> {
+function init(/* It should receive a model object if it exists */): Repository<
+    string | void
+> {
     return {
         ...loginStore,
-        getSchemas: () => {}
+        getSchemas: () => {},
     };
 }
 
