@@ -6,6 +6,6 @@ describe("@trainscoding/prettier-config", () => {
     });
 
     it("Should extend from eslint:recommended", () => {
-        expect(PrettierConfig.singleQuote).toBe(false);
+        expect(PrettierConfig.singleQuote).toBe(true);
     });
 });
