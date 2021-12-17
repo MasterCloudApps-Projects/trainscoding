@@ -1,7 +1,7 @@
 import { Repository } from 'src/types/repositories';
 
 function getGreetings(): string {
-    return `Hello world!`;
+    return `Hello world! Hello URJC!`;
 }
 
 const helloWorldStore = {
